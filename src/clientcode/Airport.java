@@ -1,13 +1,15 @@
 package clientcode;
 
-import data.airport.model.FlightData;
-import data.airport.model.FlightDataCollection;
+import data.airport.model.*;
 
 import java.util.Scanner;
 
 public class Airport {
-    private static Scanner scanner = new Scanner(System.in);
-    private FlightDataCollection collection = new FlightDataCollection();
+    private static final Scanner scanner = new Scanner(System.in);
+    private final FlightDataCollection collection = new FlightDataCollection();
+    private final BoardingTotem boardingTotem = new BoardingTotem(collection);
+    private final LandingTotem landingTotem = new LandingTotem(collection);
+    private final BoardingLandingTotem boardingLandingTotem = new BoardingLandingTotem(boardingTotem, landingTotem);
 
     public void run() {
         int option;
@@ -15,8 +17,11 @@ public class Airport {
             System.out.println("1 - Novo voo");
             System.out.println("2 - Alterar estado");
             System.out.println("3 - Lista de Voos");
+            System.out.println("4 - Lista de voos que irão decolar");
+            System.out.println("5 - Lista de voos que irão aterrisar");
+            System.out.println("6 - Lista de voos que irão aterrisar e decolar");
             System.out.println("0 - Encerrar");
-            System.out.printf("Opção: ");
+            System.out.println("Opção: ");
             option = scanner.nextInt();
 
             switch (option){
@@ -33,6 +38,18 @@ public class Airport {
                     for (FlightData flight : collection.allFlights()){
                         System.out.println(flight);
                     }
+                    break;
+
+                case 4:
+                    System.out.println(boardingTotem);
+                    break;
+
+                case 5:
+                    System.out.println(landingTotem);
+                    break;
+
+                case 6:
+                    System.out.println(boardingLandingTotem);
                     break;
 
                 default:
